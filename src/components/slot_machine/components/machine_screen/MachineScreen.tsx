@@ -40,17 +40,6 @@ const MachineScreen: React.FC<MachineScreenProps> = ({
         return newSlots;
     };
 
-    const generateFinalSlots = () => {
-        const newSlots = [];
-        for (let x = 0; x < 3; x++) {
-            for (let y = 0; y < 3; y++) {
-                const value = allPossibleValues[getRandomInt(allPossibleValues.length)];
-                newSlots.push(new Slot(y, x, value));
-            }
-        }
-        return newSlots;
-    };
-
     const checkWinningCombinations = (slots: Slot[]) => {
         let localMultiplier = 0;
         const updatedSlots = slots.map(slot => ({ ...slot, isWinning: false }));
@@ -119,7 +108,7 @@ const MachineScreen: React.FC<MachineScreenProps> = ({
 
             setTimeout(() => {
                 clearInterval(interval);
-                const newSlots = generateFinalSlots();
+                const newSlots = generateRandomSlots();
                 const { updatedSlots, localMultiplier } = checkWinningCombinations(newSlots);
                 setCurrentSlots(updatedSlots);
                 setIsRunning(false);
@@ -136,7 +125,7 @@ const MachineScreen: React.FC<MachineScreenProps> = ({
     }, [isRunning, setIsRunning, betAmount, setUserMoney, setCurrentSlots]);
 
     useEffect(() => {
-        setCurrentSlots(generateFinalSlots());
+        setCurrentSlots(generateRandomSlots());
     }, [setCurrentSlots]);
 
     return (
